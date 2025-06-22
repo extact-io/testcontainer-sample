@@ -4,9 +4,9 @@ import org.testcontainers.containers.GenericContainer;
 
 import lombok.NonNull;
 
-public class UrlConnectableContainer extends GenericContainer<UrlConnectableContainer> {
+public class RestAppContainer extends GenericContainer<RestAppContainer> {
 
-    public UrlConnectableContainer(@NonNull String dockerImageName) {
+    public RestAppContainer(@NonNull String dockerImageName) {
         super(dockerImageName);
     }
 }

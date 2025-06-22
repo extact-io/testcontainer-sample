@@ -11,8 +11,8 @@ import org.springframework.web.client.RestClient;
 import org.springframework.web.client.support.RestClientAdapter;
 import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 
-import io.extact.sample.testcontainer.details.PropertiesUrlConnectionDetails;
-import io.extact.sample.testcontainer.details.UrlConnectionDetails;
+import io.extact.sample.testcontainer.details.PropertiesRestAppConnectionDetails;
+import io.extact.sample.testcontainer.details.RestAppConnectionDetails;
 
 @SpringBootApplication
 @EnableConfigurationProperties
@@ -28,12 +28,12 @@ public class ClientApplication {
     @Bean
     @ConfigurationProperties("client.target")
     @Profile("properties")
-    PropertiesUrlConnectionDetails propertiesUrlConnectionDetails() {
-        return new PropertiesUrlConnectionDetails();
+    PropertiesRestAppConnectionDetails propertiesUrlConnectionDetails() {
+        return new PropertiesRestAppConnectionDetails();
     }
 
     @Bean
-    ContainerClient containerClientByServiceConnection(UrlConnectionDetails details) {
+    ContainerClient containerClient(RestAppConnectionDetails details) {
 
         RestClient restClient = RestClient.builder()
                 .baseUrl(details.getUrl())
