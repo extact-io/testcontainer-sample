@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 
-import io.extact.sample.testcontainer.service.UrlConnectableContainer;
+import io.extact.sample.testcontainer.service.RestAppContainer;
 
 /**
  * Step5をオレオレServiceConnectionにした例
@@ -29,8 +29,8 @@ class ContainerClientStep6Test {
     static class TestConfig {
         @Bean
         @ServiceConnection
-        UrlConnectableContainer appContainer() {
-            return new UrlConnectableContainer("container-app:latest")
+        RestAppContainer appContainer() {
+            return new RestAppContainer("container-app:latest")
                     .withExposedPorts(8080);
         }
     }
