@@ -1,0 +1,15 @@
+# Springframework設定
+spring: 
+  application.name: container-client
+  main.banner-mode: off
+  profiles:
+    default: properties
+
+# ログ設定
+logging:
+  level:
+    org.springframework.web: DEBUG
+
+# クライアント設定
+client:
+  target.url: http://localhost:8080
