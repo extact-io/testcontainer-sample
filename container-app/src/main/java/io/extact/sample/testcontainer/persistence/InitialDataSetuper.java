@@ -13,7 +13,6 @@ public class InitialDataSetuper implements CommandLineRunner {
 
     private final PersonRepository repository;
 
-    //@Transactional ← repositoryで定義
     @Override
     public void run(String... args) throws Exception {
 

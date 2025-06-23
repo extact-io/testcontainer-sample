@@ -4,5 +4,5 @@ import org.springframework.boot.autoconfigure.service.connection.ConnectionDetai
 
 public interface RestAppConnectionDetails extends ConnectionDetails {
 
-    String getUrl();
+    String getConnectUrl();
 }

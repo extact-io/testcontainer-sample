@@ -24,7 +24,7 @@ class RestAppContainerConnectionDetailsFactory
         }
 
         @Override
-        public String getUrl() {
+        public String getConnectUrl() {
             String host = getContainer().getHost();
             int port = getContainer().getFirstMappedPort();
             return "http://%s:%s".formatted(host, port);

@@ -37,7 +37,7 @@ class ContainerClientStep5Test {
         @Bean
         DynamicPropertyRegistrar targetUrlRegistrar(GenericContainer<?> appContainer, Environment env) {
             String destination = "http://" + appContainer.getHost() + ":" + appContainer.getFirstMappedPort();
-            return registry -> registry.add("client.target.url", () -> destination);
+            return registry -> registry.add("client.connect-url", () -> destination);
         }
     }
 

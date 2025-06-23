@@ -12,4 +12,4 @@ logging:
 
 # クライアント設定
 client:
-  target.url: http://localhost:8080
+  connect-url: http://localhost:8080

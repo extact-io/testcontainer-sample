@@ -5,5 +5,5 @@ import lombok.Data;
 @Data
 public class PropertiesRestAppConnectionDetails implements RestAppConnectionDetails {
 
-    private String url;
+    private String connectUrl;
 }

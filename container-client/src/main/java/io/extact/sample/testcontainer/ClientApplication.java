@@ -26,7 +26,7 @@ public class ClientApplication {
     }
 
     @Bean
-    @ConfigurationProperties("client.target")
+    @ConfigurationProperties("client")
     @Profile("properties")
     PropertiesRestAppConnectionDetails propertiesUrlConnectionDetails() {
         return new PropertiesRestAppConnectionDetails();
@@ -36,7 +36,7 @@ public class ClientApplication {
     ContainerClient containerClient(RestAppConnectionDetails details) {
 
         RestClient restClient = RestClient.builder()
-                .baseUrl(details.getUrl())
+                .baseUrl(details.getConnectUrl())
                 .build();
 
         RestClientAdapter adapter = RestClientAdapter.create(restClient);
