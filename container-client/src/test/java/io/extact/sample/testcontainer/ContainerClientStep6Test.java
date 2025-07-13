@@ -31,6 +31,7 @@ class ContainerClientStep6Test {
         @ServiceConnection
         RestAppContainer appContainer() {
             return new RestAppContainer("container-app:latest")
+                    .withEnv("SPRING_PROFILES_DEFAULT", "jpa")
                     .withExposedPorts(8080);
         }
     }

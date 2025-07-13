@@ -1,3 +1,7 @@
+# Tomcat設定
+server:
+  port: 8081
+
 # Springframework設定
 spring: 
   application.name: container-client
@@ -5,11 +9,29 @@ spring:
   profiles:
     default: properties
 
+# actuator設定
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+        exclude: "env,beans"
+  tracing:
+    sampling:
+      probability: 1.0
+
+tracing:
+  url: "http://localhost:4317"
+
 # ログ設定
 logging:
   level:
     org.springframework.web: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - [traceId=%X{traceId}, spanId=%X{spanId}] %msg%n"
 
 # クライアント設定
 client:
   connect-url: http://localhost:8080
+
+  
