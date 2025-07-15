@@ -7,6 +7,8 @@ spring:
     url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
     password: postgres
+    hikari:
+      maximum-pool-size: 1
   jpa:
     open-in-view: false
     hibernate:
@@ -36,4 +38,3 @@ logging:
     org.hibernate.type.descriptor.sql.BasicBinder: TRACE
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - [traceId=%X{traceId}, spanId=%X{spanId}] %msg%n"
-

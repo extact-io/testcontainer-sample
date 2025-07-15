@@ -24,9 +24,7 @@ public class ContainerApplication {
     @EnableAutoConfiguration(exclude = {
             DataSourceAutoConfiguration.class,
             HibernateJpaAutoConfiguration.class,
-            JpaRepositoriesAutoConfiguration.class
-    })
-
+            JpaRepositoriesAutoConfiguration.class})
     @Profile("memory")
     static class MemoryProfileConfig {
     }

@@ -30,3 +30,23 @@ datasources:
         enabled: true
       serviceMap:
         datasourceUid: 'prometheus'
+      lokiSearch:
+        datasourceUid: loki  
+  - name: Loki
+    type: loki
+    uid: loki
+    access: proxy
+    orgId: 1
+    url: http://loki:3100
+    basicAuth: false
+    isDefault: false
+    version: 1
+    editable: true
+    apiVersion: 1
+    jsonData:
+      maxLines: 50
+      derivedFields:
+        - datasourceUid: tempo
+          matcherRegex: '.+ --- \[.+\] \[.+\] \[(\w*)-\w*\] .+'
+          name: TraceID
+          url: $${__value.raw}
