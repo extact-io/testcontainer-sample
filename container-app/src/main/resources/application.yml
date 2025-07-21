@@ -26,6 +26,9 @@ management:
   tracing:
     sampling:
       probability: 1.0
+  otlp:
+    logging:
+      endpoint: "http://tsukumo:3100/otlp/v1/logs"
 
 tracing:
   url: "http://localhost:4317"
@@ -33,7 +36,7 @@ tracing:
 # ログ設定
 logging:
   level:
-    org.springframework.web: DEBUG
+    org.springframework.boot.logging: TRACE
     org.hibernate.SQL: DEBUG
     org.hibernate.type.descriptor.sql.BasicBinder: TRACE
   pattern:

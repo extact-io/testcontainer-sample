@@ -19,9 +19,12 @@ management:
   tracing:
     sampling:
       probability: 1.0
+  otlp:
+    tracing:
+      endpoint: http://localhost:4318/v1/traces
 
-tracing:
-  url: "http://localhost:4317"
+#tracing:
+#  url: "http://localhost:4317"
 
 # ログ設定
 logging:

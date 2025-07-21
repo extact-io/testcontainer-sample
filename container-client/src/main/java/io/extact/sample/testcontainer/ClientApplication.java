@@ -1,6 +1,5 @@
 package io.extact.sample.testcontainer;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -14,7 +13,6 @@ import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 
 import io.extact.sample.testcontainer.details.PropertiesRestAppConnectionDetails;
 import io.extact.sample.testcontainer.details.RestAppConnectionDetails;
-import io.opentelemetry.exporter.otlp.trace.OtlpGrpcSpanExporter;
 
 @SpringBootApplication
 @EnableConfigurationProperties
@@ -57,8 +55,8 @@ public class ClientApplication {
         return new TimerExecutor(client);
     }
 
-    @Bean
-    OtlpGrpcSpanExporter otlpHttpSpanExporter(@Value("${tracing.url}") String url) {
-        return OtlpGrpcSpanExporter.builder().setEndpoint(url).build();
-    }
+//    @Bean
+//    OtlpGrpcSpanExporter otlpHttpSpanExporter(@Value("${tracing.url}") String url) {
+//        return OtlpGrpcSpanExporter.builder().setEndpoint(url).build();
+//    }
 }

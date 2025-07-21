@@ -26,13 +26,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
-
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
@@ -50,9 +43,9 @@
             <artifactId>opentelemetry-exporter-otlp</artifactId>
         </dependency>
         <dependency>
-            <groupId>net.ttddyy.observation</groupId>
-            <artifactId>datasource-micrometer-spring-boot</artifactId>
-            <version>1.1.2</version>
+            <groupId>io.opentelemetry.instrumentation</groupId>
+            <artifactId>opentelemetry-logback-appender-1.0</artifactId>
+            <version>2.15.0-alpha</version>
         </dependency>
         <dependency>
             <groupId>com.github.loki4j</groupId>
@@ -60,12 +53,24 @@
             <version>1.6.0</version>
             <scope>runtime</scope>
         </dependency>
+        <dependency>
+            <groupId>net.ttddyy.observation</groupId>
+            <artifactId>datasource-micrometer-spring-boot</artifactId>
+            <version>1.1.2</version>
+        </dependency>
 
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
+
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -113,7 +118,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <executions>
                     <execution>
-                        <phase>package</phase>
+                        <phase>install</phase>
                         <goals>
                             <goal>build-image-no-fork</goal>
                         </goals>
@@ -128,7 +133,8 @@
                     </excludes>
                     <image>
                         <name>${project.artifactId}</name>
-                        <builder>paketobuildpacks/builder-jammy-buildpackless-base</builder>
+                        <builder>
+                            paketobuildpacks/builder-jammy-buildpackless-base</builder>
                         <buildpacks>
                             <buildpack>paketobuildpacks/java</buildpack>
                         </buildpacks>
