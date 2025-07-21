@@ -20,10 +20,10 @@ import io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppen
 @SpringBootApplication
 public class ContainerApplication {
 
-    static {
-        System.setProperty("http.proxyHost", "127.0.0.1");
-        System.setProperty("http.proxyPort", "8888");
-    }
+//    static {
+//        System.setProperty("http.proxyHost", "127.0.0.1");
+//        System.setProperty("http.proxyPort", "8888");
+//    }
 
     public static void main(String[] args) {
         SpringApplication.run(ContainerApplication.class, args);

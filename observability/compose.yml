@@ -1,13 +1,15 @@
 services:
   prometheus:
-    image: prom/prometheus:v2.54.1
+    image: prom/prometheus:v3.5.0
+    #image: prom/prometheus:v2.54.1
     container_name: prometheus
     ports:
       - "9090:9090"
     command:
-      - --enable-feature=exemplar-storage
-      - --enable-feature=otlp-write-receiver
       - --web.enable-remote-write-receiver
+      - --web.enable-otlp-receiver
+      - --enable-feature=exemplar-storage
+      - --enable-feature=native-histograms
       - --config.file=/etc/prometheus/prometheus.yml
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
@@ -24,17 +26,8 @@ services:
     volumes:
       - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
 
-  jaeger:
-    image: jaegertracing/all-in-one:latest
-    container_name: jaeger
-    ports:
-      - "16686:16686" # the jaeger UI 
-      #- "4317:4317" # the OpenTelemetry collector grpc 
-    environment:
-      - COLLECTOR_OTLP_ENABLED=true
-
   tempo:
-    image: grafana/tempo:latest
+    image: grafana/tempo:2.8.1
     container_name: tempo
     ports:
       - "4317:4317" # the OpenTelemetry collector grpc 
