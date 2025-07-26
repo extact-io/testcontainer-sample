@@ -1,0 +1,55 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: "0.0.0.0:4417" # 4317 -> 4417
+      http:
+        endpoint: "0.0.0.0:4418" # 4318 -> 4418
+        cors:
+          allowed_origins:
+            - "http://*"
+
+processors:
+  batch:
+  memory_limiter:
+    check_interval: 5s
+    limit_percentage: 80
+    spike_limit_percentage: 25
+
+exporters:
+  otlphttp/metrics:
+    endpoint: http://prometheus:9090/api/v1/otlp
+    tls:
+      insecure: true
+  otlphttp/traces:
+    endpoint: http://tempo:4318
+    tls:
+      insecure: true
+  otlphttp/logs:
+    endpoint: http://loki:3100/otlp
+    tls:
+      insecure: true
+  debug/metrics:
+    verbosity: detailed
+  debug/traces:
+    verbosity: detailed
+  debug/logs:
+    verbosity: detailed
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [otlphttp/traces]
+      #exporters: [otlphttp/traces,debug/traces]
+    metrics:
+      receivers: [otlp]
+      processors: [batch]
+      #exporters: [otlphttp/metrics]
+      exporters: [otlphttp/metrics,debug/metrics]
+    logs:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [otlphttp/logs]
+      #exporters: [otlphttp/logs,debug/logs]

@@ -24,9 +24,9 @@ management:
         include: "*"
         exclude: "env,beans"
   metrics:
-    tags:
-      application: server_app
-      instance: "host.docker.internal:8080"
+    #tags:
+    #  application: server_app
+    #  instance: "host.docker.internal:8080"
     distribution:
       percentiles-histogram:
         http.server.requests: true
@@ -36,14 +36,14 @@ management:
   otlp:
     metrics:
       export:
-        # "/v1/metrics"はcollectorのexporterが付加するが直接接続の場合は必要
-        url: "http://tsukumo:9090/api/v1/otlp/v1/metrics"
+        url: "http://tsukumo:4418/v1/metrics"
         step: 2s
     logging:
-      endpoint: "http://tsukumo:3100/otlp/v1/logs"
+      endpoint: "http://tsukumo:4418/v1/logs"
 
 tracing:
-  url: "http://localhost:4317"
+  #url: "http://localhost:4317"
+  url: "http://tsukumo:4417" # for gRPC
             
 # ログ設定
 logging:
