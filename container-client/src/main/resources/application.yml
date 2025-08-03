@@ -19,12 +19,19 @@ management:
   tracing:
     sampling:
       probability: 1.0
+  # =======
+  # ＜Telemetryパイプラインの構成/ gPRC+prometheus＞
+  # metrics(micrometer-registry-prometheus) ------(/actuator/prometheus) <---------------------------------------------- Prometheus
+  # tracing(micrometer-tracing-bridge-otel) ------(grpc)--┬--> collector --┬-- (http://tempo:4418) ------------------> Grafana Tempo
+  # logging(opentelemetry-logback-appender-1.0) --(grpc)--┘                └-- (http://loki:3100/otlp) --------------> Grafana Loki
+  # =======
   otlp:
     tracing:
-      endpoint: http://localhost:4318/v1/traces
-
-#tracing:
-#  url: "http://localhost:4317"
+      transport: grpc
+      endpoint: "http://localhost:4317" # for gRPC
+    logging:
+      transport: grpc
+      endpoint: "http://localhost:4317" # for gRPC
 
 # ログ設定
 logging:
@@ -33,7 +40,7 @@ logging:
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - [traceId=%X{traceId}, spanId=%X{spanId}] %msg%n"
 
-# クライアント設定
+# RESTクライアント設定
 client:
   connect-url: http://localhost:8080
 

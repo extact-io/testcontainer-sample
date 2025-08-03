@@ -46,7 +46,12 @@ datasources:
     jsonData:
       maxLines: 50
       derivedFields:
-        - datasourceUid: tempo
-          matcherRegex: '.+ --- \[.+\] \[.+\] \[(\w*)-\w*\] .+'
-          name: TraceID
+        - matcherRegex: trace_id # from OpenTelemetryAppender
+          datasourceUid: tempo
+          matcherType: label
+          name: trace_id
+          url: $${__value.raw}
+        - matcherRegex: '.+ --- \[.+\] \[.+\] \[(\w*)-\w*\] .+' # from LokiAppender
+          datasourceUid: tempo
+          name: Trace ID
           url: $${__value.raw}

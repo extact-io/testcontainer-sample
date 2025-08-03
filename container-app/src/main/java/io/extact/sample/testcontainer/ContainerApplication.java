@@ -2,7 +2,6 @@ package io.extact.sample.testcontainer;
 
 import jakarta.annotation.PostConstruct;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,7 +13,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import io.opentelemetry.api.OpenTelemetry;
-import io.opentelemetry.exporter.otlp.trace.OtlpGrpcSpanExporter;
 import io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender;
 
 @SpringBootApplication
@@ -36,11 +34,6 @@ public class ContainerApplication {
             JpaRepositoriesAutoConfiguration.class})
     @Profile("memory")
     static class MemoryProfileConfig {
-    }
-
-    @Bean
-    OtlpGrpcSpanExporter otlpHttpSpanExporter(@Value("${tracing.url}") String url) {
-        return OtlpGrpcSpanExporter.builder().setEndpoint(url).build();
     }
 
     @Bean

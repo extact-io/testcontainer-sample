@@ -24,32 +24,34 @@ management:
         include: "*"
         exclude: "env,beans"
   metrics:
-    #tags:
-    #  application: server_app
-    #  instance: "host.docker.internal:8080"
+    tags:
+      application: server_app
+      instance: "host.docker.internal:8080"
     distribution:
       percentiles-histogram:
         http.server.requests: true
   tracing:
     sampling:
       probability: 1.0
+  # =======
+  # ＜TelemetryパイプラインはOTEL+HTTPの標準的な構成＞
+  # metrics(micrometer-registry-otlp) ------------(http)--┐                ┌-- (http://prometheus:9090/api/v1/otlp) -> Prometheus/otlp-receiver
+  # tracing(micrometer-tracing-bridge-otel) ------(http)--├--> collector --┤-- (http://tempo:4418) ------------------> Grafana Tempo
+  # logging(opentelemetry-logback-appender-1.0) --(http)--┘                └-- (http://loki:3100/otlp) --------------> Grafana Loki
+  # =======
   otlp:
+    tracing:
+      endpoint: "http://localhost:4318/v1/traces"
     metrics:
       export:
-        url: "http://tsukumo:4418/v1/metrics"
+        url: "http://localhost:4318/v1/metrics"
         step: 2s
     logging:
-      endpoint: "http://tsukumo:4418/v1/logs"
+      endpoint: "http://localhost:4318/v1/logs"
 
-tracing:
-  #url: "http://localhost:4317"
-  url: "http://tsukumo:4417" # for gRPC
-            
 # ログ設定
 logging:
   level:
     org.springframework.boot.logging: TRACE
     org.hibernate.SQL: DEBUG
     org.hibernate.type.descriptor.sql.BasicBinder: TRACE
-  pattern:
-    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - [traceId=%X{traceId}, spanId=%X{spanId}] %msg%n"

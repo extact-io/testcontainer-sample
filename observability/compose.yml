@@ -30,8 +30,8 @@ services:
     image: grafana/tempo:2.8.1
     container_name: tempo
     ports:
-      - "4317:4317" # the OpenTelemetry collector grpc 
-      - "4318:4318" # the OpenTelemetry collector http 
+      - "4417:4417" # the OpenTelemetry collector grpc 
+      - "4418:4418" # the OpenTelemetry collector http 
     command: ["-config.file=/etc/tempo.yaml"]
     volumes:
       - ./tempo/tempo.yaml:/etc/tempo.yaml
@@ -53,8 +53,8 @@ services:
       - ./otelcol/otel-collector-config.yml:/etc/otel-collector-config.yml
     command: ["--config=/etc/otel-collector-config.yml"]
     ports:
-      - "4417:4417"
-      - "4418:4418"
+      - "4317:4317"
+      - "4318:4318"
 
   postgres:
     image: postgres:16-alpine

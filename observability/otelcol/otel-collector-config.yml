@@ -2,12 +2,22 @@ receivers:
   otlp:
     protocols:
       grpc:
-        endpoint: "0.0.0.0:4417" # 4317 -> 4417
+        endpoint: "0.0.0.0:4317"
       http:
-        endpoint: "0.0.0.0:4418" # 4318 -> 4418
+        endpoint: "0.0.0.0:4318"
         cors:
           allowed_origins:
             - "http://*"
+  #prometheus/collector:
+  #  config:
+  #    scrape_configs:
+  #      - job_name: 'client_app'
+  #        metrics_path: '/actuator/prometheus'
+  #        scrape_interval: 15s
+  #        static_configs:
+  #          - targets: ['host.docker.internal:8081']
+  #            labels:
+  #              application: 'client_app'
 
 processors:
   batch:
@@ -22,7 +32,7 @@ exporters:
     tls:
       insecure: true
   otlphttp/traces:
-    endpoint: http://tempo:4318
+    endpoint: http://tempo:4418
     tls:
       insecure: true
   otlphttp/logs:
@@ -44,6 +54,7 @@ service:
       exporters: [otlphttp/traces]
       #exporters: [otlphttp/traces,debug/traces]
     metrics:
+      #receivers: [otlp,prometheus/collector]
       receivers: [otlp]
       processors: [batch]
       #exporters: [otlphttp/metrics]

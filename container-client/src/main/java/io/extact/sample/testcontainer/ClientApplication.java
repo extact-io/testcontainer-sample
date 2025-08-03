@@ -1,5 +1,7 @@
 package io.extact.sample.testcontainer;
 
+import jakarta.annotation.PostConstruct;
+
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -13,6 +15,8 @@ import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 
 import io.extact.sample.testcontainer.details.PropertiesRestAppConnectionDetails;
 import io.extact.sample.testcontainer.details.RestAppConnectionDetails;
+import io.opentelemetry.api.OpenTelemetry;
+import io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender;
 
 @SpringBootApplication
 @EnableConfigurationProperties
@@ -55,8 +59,23 @@ public class ClientApplication {
         return new TimerExecutor(client);
     }
 
-//    @Bean
-//    OtlpGrpcSpanExporter otlpHttpSpanExporter(@Value("${tracing.url}") String url) {
-//        return OtlpGrpcSpanExporter.builder().setEndpoint(url).build();
-//    }
+    @Bean
+    OpenTelemetryAppenderInitializer openTelemetryAppenderInitializer(OpenTelemetry openTelemetry) {
+        return new OpenTelemetryAppenderInitializer(openTelemetry);
+    }
+
+    static class OpenTelemetryAppenderInitializer {
+
+        private final OpenTelemetry openTelemetry;
+
+        OpenTelemetryAppenderInitializer(OpenTelemetry openTelemetry) {
+            this.openTelemetry = openTelemetry;
+        }
+
+        @PostConstruct
+        void init() {
+            OpenTelemetryAppender.install(this.openTelemetry);
+        }
+
+    }
 }
