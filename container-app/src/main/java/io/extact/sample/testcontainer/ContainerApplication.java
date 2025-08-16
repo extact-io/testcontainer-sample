@@ -8,9 +8,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
+import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.testcontainers.containers.PostgreSQLContainer;
 
 import io.opentelemetry.api.OpenTelemetry;
 import io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender;
@@ -25,6 +27,13 @@ public class ContainerApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(ContainerApplication.class, args);
+    }
+
+    @Bean
+    @ServiceConnection
+    @Profile("for-observability")
+    PostgreSQLContainer<?> postgreSQLContainer() {
+        return new PostgreSQLContainer<>("postgres:16-alpine");
     }
 
     @Configuration(proxyBeanMethods = false)

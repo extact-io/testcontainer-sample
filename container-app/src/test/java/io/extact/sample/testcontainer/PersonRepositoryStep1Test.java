@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
@@ -16,6 +17,7 @@ import org.testcontainers.containers.PostgreSQLContainer;
  * 一番原始的な使い方
  */
 @SpringBootTest(webEnvironment = WebEnvironment.NONE)
+@ActiveProfiles("jpa")
 public class PersonRepositoryStep1Test {
 
     // database名, username, passwordなどはPostgreSQLContainer内でデフォルトが設定されている

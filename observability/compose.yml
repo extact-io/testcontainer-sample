@@ -55,11 +55,3 @@ services:
     ports:
       - "4317:4317"
       - "4318:4318"
-
-  postgres:
-    image: postgres:16-alpine
-    environment:
-      - POSTGRES_PASSWORD=postgres
-    ports:
-      - "5432:5432"
-

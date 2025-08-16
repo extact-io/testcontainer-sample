@@ -2,11 +2,7 @@ debug: false
 # Springframework設定
 spring: 
   application.name: container-app
-  datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/postgres
-    username: postgres
-    password: postgres
+  datasource: # using @ServiceConnection
     hikari:
       maximum-pool-size: 1
   jpa:
@@ -14,7 +10,7 @@ spring:
     hibernate:
       ddl-auto: create
   profiles:
-    default: jpa
+    default: jpa,for-observability
 
 # actuator設定
 management:
